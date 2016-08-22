@@ -73,8 +73,6 @@ class IconSelectType extends FieldItemBase {
     $strings = [
       $config->get('class_prefix'),
       $this->get('value')->getValue(),
-      '.',
-      $config->get('file_extension'),
     ];
 
     array_filter($strings);
