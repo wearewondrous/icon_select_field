@@ -1,0 +1,9 @@
+class_prefix: 'icon-'
+custom:
+  -
+    key: smile
+    display_name: 'Smile'
+allowed_file_extensions:
+  - 'svg'
+file_extension: 'svg'
+icon_folder_path: ''

@@ -1,0 +1,39 @@
+{#
+/**
+ * @file
+ * Theme override for a select element.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the select tag.
+ * - options: The option element children.
+ *
+ * @see template_preprocess_select()
+ */
+#}
+{{ attach_library('icon_select_field/select') }}
+
+<div class="icon-select-wrapper">
+  {% spaceless %}
+    <select{{ attributes }}>
+      {% for option in options %}
+        {% if option.type == 'optgroup' %}
+          <optgroup label="{{ option.label }}">
+            {% for sub_option in option.options %}
+              {% set icon_tag = icon_select_tag_list[sub_option.value] %}
+              <option value="{{ sub_option.value }}"{{ sub_option.selected ? ' selected="selected"' }}
+                      data-icon-tag="{{ icon_tag }}">
+                {{ sub_option.label }}
+              </option>
+            {% endfor %}
+          </optgroup>
+        {% elseif option.type == 'option' %}
+          {% set icon_tag = icon_select_tag_list[option.value] %}
+          <option value="{{ option.value }}"{{ option.selected ? ' selected="selected"' }}
+                  data-icon-tag="{{ icon_tag }}">
+            {{ option.label }}
+          </option>
+        {% endif %}
+      {% endfor %}
+    </select>
+  {% endspaceless %}
+</div>

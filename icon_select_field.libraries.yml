@@ -1,0 +1,11 @@
+select:
+  version: VERSION
+  css:
+    theme:
+      css/vendor/select2.min.css: {}
+      css/icon_select.css: {}
+  js:
+    js/vendor/select2.min.js: {}
+    js/icon_select.js: {}
+  dependencies:
+    - core/jquery

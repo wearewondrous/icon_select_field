@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * @file
+ * Contains icon_select_field.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Render\Element\RenderElement;
+
+/**
+ * Implements hook_help().
+ */
+function icon_select_field_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the icon_select_field module.
+    case 'help.page.icon_select_field':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Use jQuery plugin Select2 dropdown to select an icon from a given list. See the settings page to enter some values') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function icon_select_field_theme() {
+  return [
+    'icon_select_select' => array(
+      'render element' => 'element',
+      'template' => 'icon-select-select',
+      'base hook' => 'select',
+    ),
+  ];
+}
+
+/**
+ * Prepares variables for select element templates.
+ *
+ * Default template: select.html.twig.
+ *
+ * It is possible to group options together; to do this, change the format of
+ * $options to an associative array in which the keys are group labels, and the
+ * values are associative arrays in the normal $options format.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the element.
+ *     Properties used: #title, #value, #options, #description, #extra,
+ *     #multiple, #required, #name, #attributes, #size.
+ */
+function icon_select_field_preprocess_icon_select_select(&$variables) {
+  $element = $variables['element'];
+
+  Element::setAttributes($element, array('id', 'name', 'size'));
+  RenderElement::setAttributes($element, array('form-select'));
+
+  $variables['icon_select_tag_list'] = $element['#icon_select_tag_list'];
+  $variables['attributes'] = $element['#attributes'];
+  $variables['options'] = form_select_options($element);
+}

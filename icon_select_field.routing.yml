@@ -1,0 +1,9 @@
+icon_select_field.settings:
+  path: '/admin/config/content/icon_select_field'
+  defaults:
+    _form: '\Drupal\icon_select_field\Form\IconSelectForm'
+    _title: 'Settings for Icon Selects'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE

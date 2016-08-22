@@ -1,0 +1,6 @@
+icon_select_field.settings:
+  title: 'Icon Selects Settings'
+  description: 'Configure the available colors for the Stripe Field'
+  parent: system.admin_config_content
+  route_name: icon_select_field.settings
+  weight: 100
