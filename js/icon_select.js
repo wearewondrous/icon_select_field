@@ -1,12 +1,6 @@
 jQuery(function ($) {
   'use strict';
 
-  var $selects = $('select.icon-select-field');
-
-  if (!$selects.length) {
-    return;
-  }
-
   function formatOption(icon) {
     if (!icon.id) {
       return icon.text;
@@ -19,8 +13,20 @@ jQuery(function ($) {
     return $icon;
   }
 
-  $selects.select2({
-    templateSelection: formatOption,
-    templateResult: formatOption
-  });
+  function init() {
+    var $selects = $('select.icon-select-field');
+
+    if (!$selects.length) {
+      return;
+    }
+
+    $selects.select2({
+      templateSelection: formatOption,
+      templateResult: formatOption
+    });
+  }
+
+  init();
+
+  $(document).ajaxComplete(init);
 });

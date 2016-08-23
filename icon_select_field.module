@@ -39,6 +39,22 @@ function icon_select_field_theme() {
 }
 
 /**
+ * Implements hook_page_attachments().
+ *
+ * Add library to the edit node page.
+ * Fields may be loaded lazy resulting in missing library, if only defined in twig template.
+ *
+ * @see contextual_preprocess()
+ */
+function icon_select_field_page_attachments(array &$page) {
+  if (!\Drupal::currentUser()->isAuthenticated()) {
+    return;
+  }
+
+  $page['#attached']['library'][] = 'icon_select_field/select';
+}
+
+/**
  * Prepares variables for select element templates.
  *
  * Default template: select.html.twig.
