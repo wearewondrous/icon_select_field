@@ -7,21 +7,11 @@ Drupal 8 module. Special Dropdown to indicate color of a stripe.
 After install you will find a new field Type. Use as desired.
 Go to the settings page `/admin/config/content/icon_select_field` and add the needed colors.
 
-We normally add the new field named `Icon Select` to a Paragraph called `Stripe`.
-Then in the `paragraph--stripe.html.twig` we put the following:
+We normally add the new field named `Icon Select`.
+Then in the `field--field-icon-select.html.twig` we put the following:
 
 ``` twig
-{% set classes = [
-    'panel',
-    content.field_icon_select['#items'].getValue|first.value
-  ]
-%}
-
-<section {{ attributes.addClass(classes) }} id="stripe-id-{{ paragraph.id() }}">
-  {{ content.field_headline }}
-  {{ content.field_inner_paragraphs }}
-</section>
-
+<i class="{{ element['#items'].getString }}"></i>
 ```
 
 # Credits
