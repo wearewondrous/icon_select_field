@@ -22,7 +22,7 @@ When placed into a field, it looks like this:
 
 Backend settings page
 
-![](docs/icon-select-settings-page.gif)
+![](docs/icon-select-settings-page.png)
 
 # Credits
 
