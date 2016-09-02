@@ -14,6 +14,16 @@ Then in the `field--field-icon-select.html.twig` we put the following:
 <i class="{{ element['#items'].getString }}"></i>
 ```
 
+# Demo Screen
+
+When placed into a field, it looks like this:
+
+![](docs/icon-select-field-demo.gif)
+
+Backend settings page
+
+![](docs/icon-select-settings-page.gif)
+
 # Credits
 
 code base: [github.com/WondrousLLC/icon_select_field](https://github.com/WondrousLLC/icon_select_field/)
