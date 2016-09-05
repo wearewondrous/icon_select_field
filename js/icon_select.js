@@ -1,4 +1,4 @@
-jQuery(function ($) {
+(function ($, Drupal) {
   'use strict';
 
   function formatOption(icon) {
@@ -13,8 +13,8 @@ jQuery(function ($) {
     return $icon;
   }
 
-  function init() {
-    var $selects = $('select.icon-select-field');
+  function init(context) {
+    var $selects = $('select.icon-select-field', context);
 
     if (!$selects.length) {
       return;
@@ -26,7 +26,7 @@ jQuery(function ($) {
     });
   }
 
-  init();
-
-  $(document).ajaxComplete(init);
-});
+  Drupal.behaviors.iconSelectField = {
+    attach: init
+  };
+})(jQuery, Drupal);
