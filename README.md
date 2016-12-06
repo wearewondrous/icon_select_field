@@ -14,6 +14,12 @@ Then in the `field--field-icon-select.html.twig` we put the following:
 <i class="{{ element['#items'].getString }}"></i>
 ```
 
+Since you can include SVG files directly in D8 twig, an other way would be like this:
+
+```twig
+{% include directory ~ '/icons/' ~ content.field_icon_select['#items'].getstring|replace({'icon-': ''})|trim ~ '.svg' %}
+```
+
 # Demo Screen
 
 When placed into a field, it looks like this:
