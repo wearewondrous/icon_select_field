@@ -4,6 +4,6 @@ icon_select_field.settings:
     _form: '\Drupal\icon_select_field\Form\IconSelectForm'
     _title: 'Settings for Icon Selects'
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'administer site configuration'
   options:
     _admin_route: TRUE
