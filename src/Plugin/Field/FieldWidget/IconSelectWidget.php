@@ -10,7 +10,7 @@ namespace Drupal\icon_select_field\Plugin\Field\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\icon_select_field\Plugin\Field\FieldType\IconSelectType;
+use Drupal\Core\Field\FieldDefinitionInterface;
 
 /**
  * Plugin implementation of the 'icon_select_widget' widget.
@@ -24,6 +24,16 @@ use Drupal\icon_select_field\Plugin\Field\FieldType\IconSelectType;
  * )
  */
 class IconSelectWidget extends WidgetBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
+    // Override the settings with the Field Type settings.
+    $this->settings = $this->getConditionalSettings();
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -35,24 +45,23 @@ class IconSelectWidget extends WidgetBase {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $configService = \Drupal::service('config.storage');
-    $custom_colors_config = $configService->read('icon_select_field.settings')['custom'];
-    $select_options = [];
-
-    foreach ($custom_colors_config as $color_config) {
-      if (!$color_config) {
-        continue;
-      }
-
-      $select_options[$color_config['key']] = $color_config['display_name'];
+    $settings = $this->getSettings();
+    if (isset($settings['icon_folder_path'])) {
+      /** @var \Drupal\icon_select_field\IconsManager $icons_manager */
+      $icons_manager = \Drupal::service('icons.manager');
+      $options = $icons_manager->scanIconsList($settings['icon_folder_path'])
+        ->match($settings['custom_options']);
+    }
+    else {
+      $options = [];
     }
 
     $element['value'] = [
       '#title' => $this->t('Icon'),
       '#type' => 'select',
       '#default_value' => isset($items[$delta]->value) ? $items[$delta]->value : NULL,
-      '#options' => ['' => t('')] + $select_options,
-      '#icon_select_tag_list' => $this->convertConfig($select_options),
+      '#options' => ['' => t('')] + $options,
+      '#icon_select_tag_list' => $this->getTagList($options),
       '#theme' => 'icon_select_select',
       '#attributes' => [
         'class' => [
@@ -66,14 +75,50 @@ class IconSelectWidget extends WidgetBase {
     return $element;
   }
 
+  /**
+   * Generates the rendered tags list.
+   *
+   * @param $custom_icons_config
+   *
+   * @return array
+   */
+  private function getTagList($custom_icons_config) {
+    $list = [];
 
-  private function convertConfig($custom_colors_config) {
-    $array = [];
-
-    foreach ($custom_colors_config as $key => $display_name) {
-      $array[$key] = IconSelectType::getRenderedTag($key);
+    foreach ($custom_icons_config as $key => $display_name) {
+      $list[$key] = $this->getRenderedTag($key);
     }
 
-    return $array;
+    return $list;
   }
+
+  /**
+   * Renders the tag value.
+   *
+   * @return string
+   *   The rendered tag.
+   */
+  public function getRenderedTag($value) {
+    $settings = $this->getSettings();
+    $icon_path = $settings['icon_folder_path'] . $value . '.' . $settings['file_extension'];
+
+    return "<img src=\"{$icon_path}\">";
+  }
+
+  /**
+   * Gets the settings from the Field Type.
+   *
+   * @return array
+   *   Settings array.
+   */
+  public function getConditionalSettings() {
+    $field_item_list = $this->fieldDefinition->getItemDefinition()->getTypedDataManager()->createInstance($this->fieldDefinition->getDataType(), [
+      'data_definition' => $this->fieldDefinition->getItemDefinition(),
+      'name' => 0,
+      'parent' => NULL,
+    ]);
+    // Get the settings from the IconSelectType class.
+    return $field_item_list->getConditionalSettings();
+  }
+
 }

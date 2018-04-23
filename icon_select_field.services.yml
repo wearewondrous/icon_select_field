@@ -1,0 +1,4 @@
+services:
+  icons.manager:
+    class: Drupal\icon_select_field\IconsManager
+    arguments: ['@config.storage']

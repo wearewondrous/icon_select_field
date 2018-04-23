@@ -81,13 +81,13 @@ class IconSelectForm extends ConfigFormBase {
 
     $form['custom_icons'] = array(
       '#type' => 'textarea',
-      '#title' => t('Color Codes'),
+      '#title' => t('Allowed icons'),
       '#cols' => 60,
       '#rows' => 8,
       '#reqired' => true,
       '#resizable' => 'vertical',
       '#default_value' => $setting_string,
-      '#description' => t("A list of classes that will be provided in the \"Icon Select\" dropdown. Enter one or more classes on each line in the format: <code>class|Label</code>. Example: <code>big-smile|Big Smile</code>.<br>These styles should be available in your theme's CSS file."),
+      '#description' => t("A list of Icons that will be provided in the \"Icon Select\" dropdown. Enter one or more icons on each line in the format: <code>icon-file-name|Label</code>. Example: <code>arrow-right|Arrow right</code>.<br>These icons should be available in your theme's Icon folder."),
     );
 
     return parent::buildForm($form, $form_state);
