@@ -138,7 +138,7 @@ class IconSelectType extends FieldItemBase {
       'use_global_settings',
     ]);
     $use_global_settings = isset($form_state_use_global_settings) ? $form_state_use_global_settings : $this->getSetting('use_global_settings');
-    $settings_page_url = Url::fromRoute('icon_select_field.settings', [], [['attributes' => ['target' => '_blank']]]);
+    $settings_page_url = Url::fromRoute('icon_select_field.settings', [], ['attributes' => ['target' => '_blank']]);
     $link = Link::fromTextAndUrl($this->t('Global Settings'), $settings_page_url)
       ->toString();
     $wrapper = 'settings_fields';
