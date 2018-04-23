@@ -20,6 +20,7 @@ interface IconsManagerInterface {
    *
    * @param $allowedIcons
    *   The allowed icons list.
+   *
    * @return array
    *   The allowed matched icons list.
    */

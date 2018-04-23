@@ -58,15 +58,15 @@ class IconSelectType extends FieldItemBase {
    * {@inheritdoc}
    */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
-    $schema = array(
-      'columns' => array(
-        'value' => array(
+    $schema = [
+      'columns' => [
+        'value' => [
           'type' => 'varchar',
           'length' => 128,
           'not null' => TRUE,
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
     return $schema;
   }
@@ -133,10 +133,14 @@ class IconSelectType extends FieldItemBase {
    * {@inheritdoc}
    */
   public function fieldSettingsForm(array $form, FormStateInterface $form_state) {
-    $form_state_use_global_settings = $form_state->getValue(['settings', 'use_global_settings']);
+    $form_state_use_global_settings = $form_state->getValue([
+      'settings',
+      'use_global_settings',
+    ]);
     $use_global_settings = isset($form_state_use_global_settings) ? $form_state_use_global_settings : $this->getSetting('use_global_settings');
     $settings_page_url = Url::fromRoute('icon_select_field.settings', [], [['attributes' => ['target' => '_blank']]]);
-    $link = Link::fromTextAndUrl($this->t('Global Settings'), $settings_page_url)->toString();
+    $link = Link::fromTextAndUrl($this->t('Global Settings'), $settings_page_url)
+      ->toString();
     $wrapper = 'settings_fields';
 
     $form['use_global_settings'] = [
@@ -173,7 +177,7 @@ class IconSelectType extends FieldItemBase {
     $form['icons_settings']['file_extension'] = [
       '#type' => 'select',
       '#title' => t('Icon File Extension'),
-      '#reqired' => true,
+      '#reqired' => TRUE,
       '#default_value' => $this->getSetting('file_extension'),
       '#options' => array_combine($this->config->get('allowed_file_extensions'), $this->config->get('allowed_file_extensions')),
       '#disabled' => $use_global_settings,
@@ -184,23 +188,23 @@ class IconSelectType extends FieldItemBase {
       '#title' => t('Folder Path to Icons'),
       '#size' => 128,
       '#maxlength' => 128,
-      '#reqired' => true,
+      '#reqired' => TRUE,
       '#default_value' => $this->getSetting('icon_folder_path'),
       '#description' => t("Provide a folder path relative to the docroot, starting with a slash ('/')."),
       '#disabled' => $use_global_settings,
     ];
 
-    $form['icons_settings']['custom'] = array(
+    $form['icons_settings']['custom'] = [
       '#type' => 'textarea',
       '#title' => t('Allowed icons'),
       '#cols' => 60,
       '#rows' => 8,
-      '#reqired' => true,
+      '#reqired' => TRUE,
       '#resizable' => 'vertical',
       '#default_value' => $this->getSetting('custom'),
       '#description' => t("A list of Icons that will be provided in the \"Icon Select\" dropdown. Enter one or more icons on each line in the format: <code>icon-file-name|Label</code>. Example: <code>arrow-right|Arrow right</code>.<br>These icons should be available in your theme's Icon folder."),
       '#disabled' => $use_global_settings,
-    );
+    ];
 
     return $form;
   }
@@ -244,7 +248,7 @@ class IconSelectType extends FieldItemBase {
    *
    * @return array
    */
-  public function textToOptions($text,  $line_separator = "\r\n", $column_separator = '|') {
+  public function textToOptions($text, $line_separator = "\r\n", $column_separator = '|') {
     $options = [];
     if ($lines = explode($line_separator, $text)) {
       foreach ($lines as $line) {

@@ -68,7 +68,7 @@ class IconSelectWidget extends WidgetBase {
           'icon-select-field',
         ],
         'data-placeholder' => t('Select an option'),
-        'data-allow-clear' => 'true'
+        'data-allow-clear' => 'true',
       ],
     ];
 
@@ -112,11 +112,13 @@ class IconSelectWidget extends WidgetBase {
    *   Settings array.
    */
   public function getConditionalSettings() {
-    $field_item_list = $this->fieldDefinition->getItemDefinition()->getTypedDataManager()->createInstance($this->fieldDefinition->getDataType(), [
-      'data_definition' => $this->fieldDefinition->getItemDefinition(),
-      'name' => 0,
-      'parent' => NULL,
-    ]);
+    $field_item_list = $this->fieldDefinition->getItemDefinition()
+      ->getTypedDataManager()
+      ->createInstance($this->fieldDefinition->getDataType(), [
+        'data_definition' => $this->fieldDefinition->getItemDefinition(),
+        'name' => 0,
+        'parent' => NULL,
+      ]);
     // Get the settings from the IconSelectType class.
     return $field_item_list->getConditionalSettings();
   }

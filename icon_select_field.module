@@ -30,11 +30,11 @@ function icon_select_field_help($route_name, RouteMatchInterface $route_match) {
  */
 function icon_select_field_theme() {
   return [
-    'icon_select_select' => array(
+    'icon_select_select' => [
       'render element' => 'element',
       'template' => 'icon-select-select',
       'base hook' => 'select',
-    ),
+    ],
   ];
 }
 
@@ -42,7 +42,8 @@ function icon_select_field_theme() {
  * Implements hook_page_attachments().
  *
  * Add library to the edit node page.
- * Fields may be loaded lazy resulting in missing library, if only defined in twig template.
+ * Fields may be loaded lazy resulting in missing library, if only defined in
+ * twig template.
  *
  * @see contextual_preprocess()
  */
@@ -72,8 +73,8 @@ function icon_select_field_page_attachments(array &$page) {
 function icon_select_field_preprocess_icon_select_select(&$variables) {
   $element = $variables['element'];
 
-  Element::setAttributes($element, array('id', 'name', 'size'));
-  RenderElement::setAttributes($element, array('form-select'));
+  Element::setAttributes($element, ['id', 'name', 'size']);
+  RenderElement::setAttributes($element, ['form-select']);
 
   $variables['icon_select_tag_list'] = $element['#icon_select_tag_list'];
   $variables['attributes'] = $element['#attributes'];

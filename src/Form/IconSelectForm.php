@@ -64,7 +64,7 @@ class IconSelectForm extends ConfigFormBase {
     $form['custom_file_extension'] = [
       '#type' => 'select',
       '#title' => t('Icon File Extension'),
-      '#reqired' => true,
+      '#reqired' => TRUE,
       '#default_value' => $config->get('file_extension'),
       '#options' => array_combine($config->get('allowed_file_extensions'), $config->get('allowed_file_extensions')),
     ];
@@ -74,21 +74,21 @@ class IconSelectForm extends ConfigFormBase {
       '#title' => t('Folder Path to Icons'),
       '#size' => 128,
       '#maxlength' => 128,
-      '#reqired' => true,
+      '#reqired' => TRUE,
       '#default_value' => $config->get('icon_folder_path'),
       '#description' => t("Provide a folder path relative to the docroot, starting with a slash ('/')."),
     ];
 
-    $form['custom_icons'] = array(
+    $form['custom_icons'] = [
       '#type' => 'textarea',
       '#title' => t('Allowed icons'),
       '#cols' => 60,
       '#rows' => 8,
-      '#reqired' => true,
+      '#reqired' => TRUE,
       '#resizable' => 'vertical',
       '#default_value' => $setting_string,
       '#description' => t("A list of Icons that will be provided in the \"Icon Select\" dropdown. Enter one or more icons on each line in the format: <code>icon-file-name|Label</code>. Example: <code>arrow-right|Arrow right</code>.<br>These icons should be available in your theme's Icon folder."),
-    );
+    ];
 
     return parent::buildForm($form, $form_state);
   }
@@ -100,14 +100,15 @@ class IconSelectForm extends ConfigFormBase {
     $custom_icon_config = $this->getCustomIcons($form_state->getValue('custom_icons'));
     $custom_icon_folder_path = $form_state->getValue('custom_icon_folder_path');
 
-    foreach($custom_icon_config as $icon_config) {
+    foreach ($custom_icon_config as $icon_config) {
       if (empty($icon_config['key']) || empty($icon_config['display_name'])) {
         $form_state->setErrorByName('', t('<code>key</code> and <code>display_name</code>can not be empty.'));
       }
       if (!empty($custom_icon_folder_path)) {
-        if ($custom_icon_folder_path[0] !== '/' || substr($custom_icon_folder_path, -1 ) !== '/') {
+        if ($custom_icon_folder_path[0] !== '/' || substr($custom_icon_folder_path, -1) !== '/') {
           $form_state->setErrorByName('', t('Folder Path to Icons has to start and end with a slash (\'/\').'));
-        } elseif (!glob(DRUPAL_ROOT . $custom_icon_folder_path . '*.' . $form_state->getValue('custom_file_extension'))) {
+        }
+        elseif (!glob(DRUPAL_ROOT . $custom_icon_folder_path . '*.' . $form_state->getValue('custom_file_extension'))) {
           $form_state->setErrorByName('', t('Folder Path to Icons not a folder.'));
         }
       }

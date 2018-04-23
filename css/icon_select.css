@@ -1,40 +1,49 @@
 .icon-preview {
-  font-size: 1rem;
-  line-height: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
 }
+
 .icon-preview img {
-  display: inline-block;
-  height: 1.25rem;
-  vertical-align: text-top;
-  padding-right: .5rem;
+    display: inline-block;
+    height: 1.25rem;
+    vertical-align: text-top;
+    padding-right: .5rem;
 }
+
 .icon-select-wrapper {
-  padding: .5rem 0;
+    padding: .5rem 0;
 }
+
 .icon-select-wrapper select {
-  width: 18rem;
-  height: 1.75rem;
-  font-size: 1rem;
-  line-height: 1.5rem;
+    width: 18rem;
+    height: 1.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
 }
+
 .icon-select-wrapper .icon-preview {
-  font-size: 1rem;
-  line-height: 2.5rem;
+    font-size: 1rem;
+    line-height: 2.5rem;
 }
+
 .icon-select-wrapper .icon-preview img {
-  vertical-align: middle;
-  height: 2rem;
+    vertical-align: middle;
+    height: 2rem;
 }
+
 .icon-select-wrapper .select2-container .select2-selection--single {
-  height: 2.75rem;
-  border-radius: 2px;
+    height: 2.75rem;
+    border-radius: 2px;
 }
+
 .icon-select-wrapper .select2-container--default .select2-selection--single .select2-selection__rendered {
-  line-height: 2.5rem;
+    line-height: 2.5rem;
 }
+
 .icon-select-wrapper .select2-container--default .select2-selection--single .select2-selection__arrow {
-  height: 2.5rem;
+    height: 2.5rem;
 }
+
 .select2-results__option {
-  padding: 3px 6px;
+    padding: 3px 6px;
 }
