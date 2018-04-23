@@ -147,7 +147,7 @@ class IconSelectType extends FieldItemBase {
       '#description' => $this->t('See %link page.', ['%link' => $link]),
       '#ajax' => [
         'wrapper' => $wrapper,
-        'callback' => [get_class($this), 'showHideSettingsFields'],
+        'callback' => [get_class($this), 'ajaxUpdateFields'],
       ],
     ];
 
@@ -205,11 +205,23 @@ class IconSelectType extends FieldItemBase {
     return $form;
   }
 
-  public function showHideSettingsFields(array $element, FormStateInterface $form_state) {
+  /**
+   * Implements form element ajax callback.
+   */
+  public function ajaxUpdateFields(array $element, FormStateInterface $form_state) {
     return $element['settings']['icons_settings'];
   }
 
-  public function getCustomText($options) {
+  /**
+   * Converts array to text with multiple lines.
+   *
+   * @param $options
+   *   The options array.
+   *
+   * @return string
+   *   The text value.
+   */
+  public function optionsToText($options) {
     $value = '';
 
     foreach ($options as $item) {
@@ -220,7 +232,19 @@ class IconSelectType extends FieldItemBase {
     return $value;
   }
 
-  public function getCustomOptions($text,  $line_separator = "\r\n", $column_separator = '|') {
+  /**
+   * Converts text to options.
+   *
+   * @param $text
+   *   The text to convert.
+   * @param string $line_separator
+   *   Custom line separator.
+   * @param string $column_separator
+   *   Custom key value separator.
+   *
+   * @return array
+   */
+  public function textToOptions($text,  $line_separator = "\r\n", $column_separator = '|') {
     $options = [];
     if ($lines = explode($line_separator, $text)) {
       foreach ($lines as $line) {
@@ -258,14 +282,14 @@ class IconSelectType extends FieldItemBase {
           $config_value = $this->config->get($name);
           if ($config_value != NULL) {
             if ($name == 'custom') {
-              $config_value = $this->getCustomText($config_value);
+              $config_value = $this->optionsToText($config_value);
             }
             $settings[$name] = $config_value;
           }
         }
       }
       // Prepare a helper array to get the custom list as an array.
-      $settings['custom_options'] = !empty($settings['custom']) ? $this->getCustomOptions($settings['custom']) : [];
+      $settings['custom_options'] = !empty($settings['custom']) ? $this->textToOptions($settings['custom']) : [];
     }
 
     return $settings;
