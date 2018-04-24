@@ -277,7 +277,14 @@ class IconSelectType extends FieldItemBase {
     $settings = &drupal_static(__FUNCTION__);
 
     if (!isset($settings)) {
+      // Get the settings from the field definition.
       $settings = $this->getFieldDefinition()->getSettings();
+
+      if (empty($settings)) {
+        // Backward compatibility if the field definition doesn't return a value.
+        $settings = $this->defaultFieldSettings();
+      }
+
       $settings = array_merge($settings, $settings['icons_settings']);
 
       if ($settings['use_global_settings']) {
