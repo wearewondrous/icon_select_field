@@ -12,5 +12,10 @@
     "issues": "https://github.com/WondrousLLC/icon_select_field/issues",
     "source": "https://github.com/WondrousLLC/icon_select_field.git"
   },
-  "require": {}
+  "require": {},
+  "config": {
+    "platform": {
+      "php": "7.2"
+    }
+  }
 }
