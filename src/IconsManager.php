@@ -43,7 +43,7 @@ class IconsManager implements IconsManagerInterface {
     $full_path = \Drupal::root() . $relative_path;
 
     // Check if the directory exist.
-    if (file_prepare_directory($full_path)) {
+    if (is_dir($full_path)) {
       $finder = new Finder();
       $finder
         ->files()
