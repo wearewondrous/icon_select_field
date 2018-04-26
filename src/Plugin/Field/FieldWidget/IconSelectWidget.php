@@ -46,14 +46,13 @@ class IconSelectWidget extends WidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
+    $options = [];
+
     if (isset($settings['icon_folder_path'])) {
-      /** @var \Drupal\icon_select_field\IconsManager $icons_manager */
+      /** @var \Drupal\icon_select_field\IconsManagerInterface $icons_manager */
       $icons_manager = \Drupal::service('icons.manager');
       $options = $icons_manager->scanIconsList($settings['icon_folder_path'])
         ->match($settings['custom_options']);
-    }
-    else {
-      $options = [];
     }
 
     $element['value'] = [
@@ -82,7 +81,7 @@ class IconSelectWidget extends WidgetBase {
    *
    * @return array
    */
-  private function getTagList($custom_icons_config) {
+  private function getTagList(array $custom_icons_config) {
     $list = [];
 
     foreach ($custom_icons_config as $key => $display_name) {

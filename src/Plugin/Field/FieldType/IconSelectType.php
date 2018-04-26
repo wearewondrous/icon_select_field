@@ -225,7 +225,7 @@ class IconSelectType extends FieldItemBase {
    * @return string
    *   The text value.
    */
-  public function optionsToText($options) {
+  public function optionsToText(array $options) {
     $value = '';
 
     foreach ($options as $item) {
@@ -252,10 +252,12 @@ class IconSelectType extends FieldItemBase {
     $options = [];
     if ($lines = explode($line_separator, $text)) {
       foreach ($lines as $line) {
-        if (!empty(trim($line))) {
-          list($key, $label) = array_pad(explode($column_separator, $line), 2, 'N/A');
-          $options[$key] = $label;
+        if (empty(trim($line))) {
+          continue;
         }
+
+        list($key, $label) = array_pad(explode($column_separator, $line), 2, 'undefined');
+        $options[$key] = $label;
       }
     }
     return $options;
@@ -274,34 +276,36 @@ class IconSelectType extends FieldItemBase {
    */
   protected function getSettings() {
     // Avoid to build the same settings array multiple times.
-    $settings = &drupal_static(__FUNCTION__);
-
-    if (!isset($settings)) {
-      // Get the settings from the field definition.
-      $settings = $this->getFieldDefinition()->getSettings();
-
-      if (empty($settings)) {
-        // Backward compatibility if the field definition doesn't return a value.
-        $settings = $this->defaultFieldSettings();
-      }
-
-      $settings = array_merge($settings, $settings['icons_settings']);
-
-      if ($settings['use_global_settings']) {
-        // Override the field settings with the global settings.
-        foreach ($settings as $name => $value) {
-          $config_value = $this->config->get($name);
-          if ($config_value != NULL) {
-            if ($name == 'custom') {
-              $config_value = $this->optionsToText($config_value);
-            }
-            $settings[$name] = $config_value;
-          }
-        }
-      }
-      // Prepare a helper array to get the custom list as an array.
-      $settings['custom_options'] = !empty($settings['custom']) ? $this->textToOptions($settings['custom']) : [];
+    if ($settings = &drupal_static(__FUNCTION__)) {
+      return $settings;
     }
+
+    // Get the settings from the field definition.
+    $settings = $this->getFieldDefinition()->getSettings();
+
+    if (empty($settings)) {
+      // Backward compatibility if the field definition doesn't return a value.
+      $settings = $this->defaultFieldSettings();
+    }
+
+    $settings = array_merge($settings, $settings['icons_settings']);
+
+    if ($settings['use_global_settings']) {
+      // Override the field settings with the global settings.
+      foreach ($settings as $name => $value) {
+        $config_value = $this->config->get($name);
+        if ($config_value === NULL) {
+          continue;
+        }
+        if ($name == 'custom') {
+          $config_value = $this->optionsToText($config_value);
+        }
+        $settings[$name] = $config_value;
+      }
+    }
+
+    // Prepare a helper array to get the custom list as an array.
+    $settings['custom_options'] = !empty($settings['custom']) ? $this->textToOptions($settings['custom']) : [];
 
     return $settings;
   }
