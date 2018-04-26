@@ -2,7 +2,8 @@
 
 /**
  * @file
- * Contains \Drupal\icon_select_field\Plugin\Field\FieldFormatter\IconSelectFormatter.
+ * Contains
+ *   \Drupal\icon_select_field\Plugin\Field\FieldFormatter\IconSelectFormatter.
  */
 
 namespace Drupal\icon_select_field\Plugin\Field\FieldFormatter;
@@ -23,20 +24,21 @@ use Drupal\Core\Form\FormStateInterface;
  * )
  */
 class IconSelectFormatter extends FormatterBase {
+
   /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(// Implement default settings.
-    ) + parent::defaultSettings();
+    return [// Implement default settings.
+      ] + parent::defaultSettings();
   }
 
   /**
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    return array(// Implement settings form.
-    ) + parent::settingsForm($form, $form_state);
+    return [// Implement settings form.
+      ] + parent::settingsForm($form, $form_state);
   }
 
   /**
@@ -53,14 +55,14 @@ class IconSelectFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    $element = array();
+    $element = [];
 
     foreach ($items as $delta => $item) {
       // Render each element as markup.
-      $element[$delta] = array(
+      $element[$delta] = [
         '#type' => 'markup',
         '#markup' => $item->value,
-      );
+      ];
     }
 
     return $element;
