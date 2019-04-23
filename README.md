@@ -32,6 +32,6 @@ Backend settings page
 
 # Credits
 
-code base: [github.com/WondrousLLC/icon_select_field](https://github.com/WondrousLLC/icon_select_field/)
+code base: [github.com/wearewondrous/icon_select_field](https://github.com/wearewondrous/icon_select_field/)
 
 developed by [WONDROUS LLC](https://www.wearewondrous.com/)
