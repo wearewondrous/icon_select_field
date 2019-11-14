@@ -22,7 +22,8 @@
 
     $selects.select2({
       templateSelection: formatOption,
-      templateResult: formatOption
+      templateResult: formatOption,
+      width: 'auto'
     });
   }
 
