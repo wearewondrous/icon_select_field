@@ -1,6 +1,7 @@
 # icon_select_field
 
 Drupal 8 module. Special Dropdown to indicate color of a stripe.
+It's also compatible with Drupal 9.
 
 # Usage
 
