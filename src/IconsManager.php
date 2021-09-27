@@ -51,7 +51,7 @@ class IconsManager implements IconsManagerInterface {
       foreach ($finder as $file) {
         $filePath = $file->getPath();
         $splits = explode($full_path, $filePath);
-        $subFolder = count($splits) > 1 ? $splits[1]: '';
+        $subFolder = count($splits) > 1 ? $splits[1] : '';
         $key = $file->getBasename('.' . $file->getExtension());
         $key = $subFolder ? $subFolder . '/' . $key : $key;
         $this->availableIcons[$key] = $key;
